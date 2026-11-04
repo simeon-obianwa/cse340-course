@@ -2,38 +2,39 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import express from 'express';
 
-// Define the application environment
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
-
-// Define the port number the server will listen on
 const PORT = process.env.PORT || 3000;
 
-// Recreate ES Module path variables
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Initialize the Express application
 const app = express();
 
 /**
- * Configure Express middleware
+ * Configure Express middleware & View Engine
  */
-// Serve static files from the public directory
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'src/views'));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 /**
  * Routes
  */
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'src/views/home.html'));
+    res.render('home', { title: 'Home' });
 });
 
 app.get('/organizations', (req, res) => {
-    res.sendFile(path.join(__dirname, 'src/views/organizations.html'));
+    res.render('organizations', { title: 'Organizations' });
 });
 
 app.get('/projects', (req, res) => {
-    res.sendFile(path.join(__dirname, 'src/views/projects.html'));
+    res.render('projects', { title: 'Service Projects' });
+});
+
+app.get('/categories', (req, res) => {
+    res.render('categories', { title: 'Categories' });
 });
 
 // Start the server
