@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import express from 'express';
 import { testConnection } from './src/models/db.js';
+import { getAllOrganizations } from './src/models/organizations.js';
 
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
 const PORT = process.env.PORT || 3000;
@@ -28,9 +29,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', async (req, res) => {
     res.render('home', { title: 'Home' });
 });
-
 app.get('/organizations', async (req, res) => {
-    res.render('organizations', { title: 'Organizations' });
+    try {
+        const organizations = await getAllOrganizations();
+        const title = 'Our Partner Organizations';
+
+        // Passing the database results to the frontend template
+        res.render('organizations', { title, organizations });
+    } catch (error) {
+        console.error("Error fetching organizations:", error);
+        res.status(500).send("Server Error");
+    }
 });
 
 app.get('/projects', async (req, res) => {
