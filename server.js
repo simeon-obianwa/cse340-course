@@ -1,6 +1,10 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import { fileURLToPath } from 'url';
 import path from 'path';
 import express from 'express';
+import { testConnection } from './src/models/db.js';
 
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
 const PORT = process.env.PORT || 3000;
@@ -21,24 +25,29 @@ app.use(express.static(path.join(__dirname, 'public')));
 /**
  * Routes
  */
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
     res.render('home', { title: 'Home' });
 });
 
-app.get('/organizations', (req, res) => {
+app.get('/organizations', async (req, res) => {
     res.render('organizations', { title: 'Organizations' });
 });
 
-app.get('/projects', (req, res) => {
+app.get('/projects', async (req, res) => {
     res.render('projects', { title: 'Service Projects' });
 });
 
-app.get('/categories', (req, res) => {
+app.get('/categories', async (req, res) => {
     res.render('categories', { title: 'Categories' });
 });
 
 // Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running at http://127.0.0.1:${PORT}`);
-    console.log(`Environment: ${NODE_ENV}`);
+app.listen(PORT, async () => {
+    try {
+        await testConnection();
+        console.log(`Server is running at http://127.0.0.1:${PORT}`);
+        console.log(`Environment: ${NODE_ENV}`);
+    } catch (error) {
+        console.error('Error connecting to the database:', error);
+    }
 });
