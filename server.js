@@ -29,12 +29,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', async (req, res) => {
     res.render('home', { title: 'Home' });
 });
+
 app.get('/organizations', async (req, res) => {
     try {
         const organizations = await getAllOrganizations();
         const title = 'Our Partner Organizations';
 
-        // Passing the database results to the frontend template
+
         res.render('organizations', { title, organizations });
     } catch (error) {
         console.error("Error fetching organizations:", error);
