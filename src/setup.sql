@@ -12,7 +12,7 @@ INSERT INTO organization (name, description, contact_email, logo_filename) VALUE
 ('UnityServe Volunteers', 'A volunteer coordination group supporting local charities and service initiatives.', 'hello@unityserve.org', 'unityserve-logo.png');
 
 
--- Service Projects Table Setup SQL commands
+-- Service Projects Table Setup SQL statements
 -- 1. Create the table
 CREATE TABLE public.service_project (
     project_id SERIAL PRIMARY KEY,
@@ -50,3 +50,34 @@ VALUES
 (3, 'Beach Cleanup', 'Removing plastic waste from the coastline.', 'Sunny Beach', '2026-12-08'),
 (3, 'Winter Coat Drive', 'Collecting warm clothes for winter.', 'City Hall', '2026-12-14'),
 (3, 'Toy Repair Workshop', 'Fixing broken toys for the holidays.', 'Community Workshop', '2026-12-20');
+
+
+-- Service Project Categories Setup SQL statements
+-- 1. Create the Categories Table
+CREATE TABLE public.category (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+
+-- 2. Create Junction Table (Many-to-Many relationship)
+CREATE TABLE public.project_category (
+    project_id INT NOT NULL,
+    category_id INT NOT NULL,
+    CONSTRAINT pk_project_category PRIMARY KEY (project_id, category_id),
+    CONSTRAINT fk_project FOREIGN KEY (project_id) REFERENCES public.service_project(project_id) ON DELETE CASCADE,
+    CONSTRAINT fk_category FOREIGN KEY (category_id) REFERENCES public.category(category_id) ON DELETE CASCADE
+);
+
+-- 3. Insert 4 sample categories
+INSERT INTO public.category (name) VALUES
+('Environmental & Sustainability'),
+('Community Building'),
+('Education & Youth'),
+('Health & Wellness');
+
+-- 4. Associate the 15 projects with categories
+-- (Assuming your project_ids are 1 through 15 from the previous task)
+INSERT INTO public.project_category (project_id, category_id) VALUES
+(1, 2), (2, 1), (3, 4), (4, 3), (5, 3), 
+(6, 1), (6, 2), (7, 2), (8, 4), (9, 1), 
+(10, 1), (11, 4), (12, 3), (13, 1), (14, 2), (15, 2);
