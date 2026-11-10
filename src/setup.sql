@@ -27,7 +27,7 @@ CREATE TABLE public.service_project (
         ON DELETE CASCADE
 );
 
--- 2. Insert 15 sample records (Assuming organization IDs 1, 2, and 3 exist)
+-- 2. Insert 15 sample records for organization 1, 2, and 3 
 INSERT INTO public.service_project (organization_id, title, description, location, project_date)
 VALUES 
 -- Projects for Organization 1
