@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+import { getAllCategories } from './src/models/categories.js';
 import { getAllProjects } from './src/models/projects.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -58,7 +59,14 @@ app.get('/projects', async (req, res) => {
 });
 
 app.get('/categories', async (req, res) => {
-    res.render('categories', { title: 'Categories' });
+    try {
+        const categories = await getAllCategories();
+        const title = 'Project Categories';
+        res.render('categories', { title, categories });
+    } catch (error) {
+        console.error("Error fetching categories:", error);
+        res.status(500).send("Server Error");
+    }
 });
 
 // Start the server
