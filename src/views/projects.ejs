@@ -7,11 +7,9 @@
 
         <ul>
             <% projects.forEach(function(project) { %>
-                <% // Formats date as: "November 20, 2026" const formattedDate=new
-                    Date(project.project_date).toLocaleDateString('en-US', { year: 'numeric' , month: 'long' ,
-                    day: 'numeric' }); %>
+                <% const formattedDate=new Date(project.project_date).toLocaleDateString('en-US', { year: 'numeric' ,
+                    month: 'long' , day: 'numeric' }); %>
                     <li style="margin-bottom: 20px;">
-
                         <strong>
                             <%= formattedDate %>: <%= project.title %> (<%= project.organization_name %>)
                         </strong>
