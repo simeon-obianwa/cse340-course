@@ -53,13 +53,13 @@ VALUES
 
 
 -- Service Project Categories Setup SQL statements
--- 1. Create the Categories Table
+-- 1. To create the Categories Table
 CREATE TABLE public.category (
     category_id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL
 );
 
--- 2. Create Junction Table (Many-to-Many relationship)
+-- 2. To create Junction Table (Many-to-Many relationship)
 CREATE TABLE public.project_category (
     project_id INT NOT NULL,
     category_id INT NOT NULL,
