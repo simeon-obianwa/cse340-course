@@ -148,5 +148,9 @@ vite.config.ts.timestamp-*
 # Turbo Repo
 .turbo
 
+# OS & Editor files
+.vscode/
+Thumbs.db
+Desktop.ini
+.DS_Store
 node_modules/
-.env
