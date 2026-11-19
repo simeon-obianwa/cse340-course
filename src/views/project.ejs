@@ -11,7 +11,8 @@
             <%= project.description %>
         </p>
         <p><strong>Date:</strong>
-            <%= new Date(project.date).toLocaleDateString() %>
+            <%= new Date(project.date).toLocaleDateString('en-US', { year: 'numeric' , month: 'long' , day: 'numeric' })
+                %>
         </p>
         <p><strong>Location:</strong>
             <%= project.location %>
@@ -19,5 +20,22 @@
         <p><strong>Partner Organization:</strong> <a href="/organization/<%= project.organization_id %>">
                 <%= project.organization_name %>
             </a></p>
+
+        <section aria-label="Project Categories">
+            <h3>Categories</h3>
+            <% if (categories && categories.length> 0) { %>
+                <ul class="category-tags">
+                    <% categories.forEach(category=> { %>
+                        <li>
+                            <a href="/category/<%= category.category_id %>" class="category-tag">
+                                <%= category.name %>
+                            </a>
+                        </li>
+                        <% }); %>
+                </ul>
+                <% } else { %>
+                    <p>No categories assigned to this project.</p>
+                    <% } %>
+        </section>
     </main>
     <%- include('partials/footer') %>

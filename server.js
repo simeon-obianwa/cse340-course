@@ -7,10 +7,10 @@ import path from 'path';
 import { testConnection } from './src/models/db.js';
 import router from './src/routes.js';
 
-// Define the application environment
+// To define the application environment
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
 
-// Define the port number the server will listen on
+// To define the port number the server will listen on
 const PORT = process.env.PORT || 3000;
 
 const __filename = fileURLToPath(import.meta.url);
